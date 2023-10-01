@@ -6,7 +6,6 @@ WORKDIR /app-frontend
 
 # Copiar os package.json e package-lock.json para o container
 COPY package*.json ./
-COPY packages.npm ./
 
 # Instalar as dependências Node
 RUN npm install
@@ -17,6 +16,7 @@ COPY . /app-frontend/
 # Sinalize que aplicação expõe a porta 3000
 EXPOSE 3000
 ENTRYPOINT [ "npm", "run" ]
+CMD [ "start" ]
 
 # Configurar os comandos para iniciar a aplicação de acordo com as boas práticas
 # Dica: Leia a seção Docker e Docker-compose no README para mais informações

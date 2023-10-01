@@ -12,10 +12,10 @@ import Teams from './Teams.Model';
 class Matches extends Model<InferAttributes<Matches>,
 InferCreationAttributes<Matches>> {
   declare id: CreationOptional<number>;
-  declare homeTeamId: string;
-  declare homeTeamGoals: string;
-  declare awayTeamId: string;
-  declare awayTeamGoals: string;
+  declare homeTeamId: number;
+  declare homeTeamGoals: number;
+  declare awayTeamId: number;
+  declare awayTeamGoals: number;
   declare inProgress: boolean;
 }
 
@@ -27,19 +27,31 @@ Matches.init({
     autoIncrement: true,
   },
   homeTeamId: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: {
+        tableName: 'teams',
+      },
+      key: 'id',
+    },
   },
   homeTeamGoals: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   awayTeamId: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: {
+        tableName: 'teams',
+      },
+      key: 'id',
+    },
   },
   awayTeamGoals: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   inProgress: {
@@ -48,12 +60,14 @@ Matches.init({
   },
 }, {
   sequelize: db,
-  modelName: 'matches',
+  modelName: 'Matches',
   timestamps: false,
   underscored: true,
 });
 
-Teams.belongsTo(Matches, { foreignKey: 'homeTeamId', as: 'homeTeam' });
-Teams.belongsTo(Matches, { foreignKey: 'awayTeamId', as: 'awayTeam' });
+Teams.hasMany(Matches, { foreignKey: 'homeTeamId', as: 'homeTeam' });
+Teams.hasMany(Matches, { foreignKey: 'awayTeamId', as: 'awayTeam' });
+Matches.belongsTo(Teams, { foreignKey: 'homeTeamId' });
+Matches.belongsTo(Teams, { foreignKey: 'awayTeamId' });
 
 export default Matches;

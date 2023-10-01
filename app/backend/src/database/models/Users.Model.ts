@@ -34,16 +34,15 @@ Users.init({
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
 }, {
   sequelize: db,
-  modelName: 'users',
+  modelName: 'Users',
   timestamps: false,
   underscored: true,
 });
