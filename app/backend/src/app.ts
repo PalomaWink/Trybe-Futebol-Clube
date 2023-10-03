@@ -7,9 +7,8 @@ class App {
   constructor() {
     this.app = express();
     this.app.use(express.json());
-    this.routes();
-
     this.config();
+    this.routes();
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
