@@ -16,7 +16,7 @@ export default class UsersService {
     }
     const isPasswordValid = await bcrypt.compare(password, users.password);
     if (!isPasswordValid) {
-      return { status: 400, data: { message: 'All fields must be filled' } };
+      return { status: 401, data: { message: 'Invalid email or password' } };
     }
     const token = jwt.sign({
       id: users.id,
