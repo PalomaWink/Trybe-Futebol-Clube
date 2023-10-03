@@ -32,4 +32,7 @@ describe('Testando a rota /teams', () => {
     expect(status).to.equal(200);
     expect(body).to.deep.equal(teamId);
   });
+  afterEach(function () {
+    sinon.restore();
+  });
 });
