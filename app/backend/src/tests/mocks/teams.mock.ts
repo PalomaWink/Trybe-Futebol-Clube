@@ -41,6 +41,15 @@ const allTeams = [
   }
 ]
 
+const teamId = [
+  {
+    "id": 1,
+    "teamName": "Avaí/Kindermann"
+  },
+
+]
+
 export {
   allTeams,
+  teamId,
 }
