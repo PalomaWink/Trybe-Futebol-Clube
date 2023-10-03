@@ -7,39 +7,21 @@ import { app } from '../app';
 import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
+import Teams from '../database/models/Teams.Model';
+import { allTeams } from './mocks/teams.mock';
+import ITeam from '../Interfaces/Teams/Teams'
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+describe('Testando a rota /teams', () => {
+  it('Testando se ao fazer um findAll, retorna todos os times', async function () {
+    sinon.stub(Teams, 'findAll').resolves(allTeams as any);
 
-  // let chaiHttpResponse: Response;
+    const {status, body} = await chai.request(app).get('/teams');
 
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
-
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+    expect(status).to.equal(200);
+    expect(body).to.deep.equal(allTeams);
   });
 });
