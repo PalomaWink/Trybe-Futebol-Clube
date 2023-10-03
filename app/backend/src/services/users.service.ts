@@ -12,7 +12,7 @@ export default class UsersService {
   public async login(email: string, password: string): Promise<ServiceResponse<{ token: string }>> {
     const users = await this._usersModel.findOne({ where: { email } });
     if (!users) {
-      return { status: 400, data: { message: 'All fields must be filled' } };
+      return { status: 401, data: { message: 'Invalid email or password' } };
     }
     const isPasswordValid = await bcrypt.compare(password, users.password);
     if (!isPasswordValid) {
