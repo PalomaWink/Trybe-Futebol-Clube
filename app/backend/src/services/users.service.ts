@@ -24,14 +24,4 @@ export default class UsersService {
     }, process.env.JWT_SECRET || 'padrao', { algorithm: 'HS256', expiresIn: '7d' });
     return { status: 200, data: { token } };
   }
-
-  public async getRole(authorization: string): Promise<ServiceResponse<{ role: string }>> {
-    const [, token] = authorization.split(' ');
-    jwt.verify(token, process.env.JWT_SECRET);
-    const users = await this._usersModel.findOne({ where: { id } });
-    if (!users) {
-      return { status: 401, data: { message: 'Token must be a valid token' } };
-    }
-    return { status: 200, data: { role: users.role } };
-  }
 }
