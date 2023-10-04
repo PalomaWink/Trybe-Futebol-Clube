@@ -10,6 +10,11 @@ router.post(
   Validations.validateLogin,
   (req: Request, res: Response) => usersController.login(req, res),
 );
-// router.get('/:id', (req: Request, res: Response) => teamsController.getTeamById(req, res));
+router.get(
+  '/role',
+  Validations.validateRegister,
+  (req: Request, res: Response) =>
+    UsersController.getRole(req, res),
+);
 
 export default router;

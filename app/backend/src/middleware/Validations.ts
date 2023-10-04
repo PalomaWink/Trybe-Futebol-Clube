@@ -1,4 +1,5 @@
 import { RequestHandler, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
 
 class Validations {
   static validateLogin: RequestHandler = (req, res, next): Response | void => {
@@ -17,6 +18,22 @@ class Validations {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     next();
+  };
+
+  static validateRegister: RequestHandler = (req, res, next): Response | void => {
+    const secret = process.env.JWT_SECRET || 'padrao';
+    const { authorization } = req.headers;
+    if (!authorization) {
+      return res.status(401).json({ message: 'Token not found' });
+    }
+    const [, token] = authorization.split(' ');
+    try {
+      req.body.token = jwt.verify(token, secret);
+      next();
+    } catch (error) {
+      console.log(error);
+      return res.status(401).json({ message: 'Token must be a valid token' });
+    }
   };
 }
 
