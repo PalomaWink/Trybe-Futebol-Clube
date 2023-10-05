@@ -40,8 +40,8 @@ describe('Testando a rota /login', () => {
     const {status, body} = await chai.request(app).post('/login').send(usuario);
     
 
-    expect(status).to.equal(400);
-    expect(body).to.deep.equal({ message: 'All fields must be filled' });
+    expect(status).to.equal(401);
+    expect(body).to.deep.equal({ message: 'Invalid email or password' });
   });
 
   it('Testando se ao fazer login com uma senha inexistente, retorna um erro', async function () {
