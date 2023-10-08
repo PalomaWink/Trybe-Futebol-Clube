@@ -11,6 +11,16 @@ export default class MatchesService {
     private _sequelize = sequelize,
   ) {}
 
+  public async getMatchById(id: string) {
+    const match = await this._matchesModel.findByPk(id, {
+      include: [
+        { model: Teams, as: 'homeTeam', attributes: { exclude: ['id'] } },
+        { model: Teams, as: 'awayTeam', attributes: { exclude: ['id'] } },
+      ],
+    });
+    return match;
+  }
+
   public async getAllMatches(inProgress: string) {
     if (!inProgress) {
       const allMatches = await this._matchesModel.findAll({
@@ -27,5 +37,23 @@ export default class MatchesService {
     const queryMap = queryInProgress
       .map((dataValues) => ({ ...dataValues, inProgress: Boolean(dataValues.inProgress) }));
     return { status: 200, data: queryMap };
+  }
+
+  public async updateMatchInProgress(id: string) {
+    const match = await this.getMatchById(id);
+    if (!match) return { status: 404, data: { message: 'Match not found' } };
+    if (!match.inProgress) return { status: 409, data: { message: 'Match already finished' } };
+    match.inProgress = false;
+    await match.save();
+    return { status: 200, data: { message: 'Finished' } };
+  }
+
+  public async setMatchPointsResult(id: string, homeTeamGoals: number, awayTeamGoals: number) {
+    const match = await this.getMatchById(id);
+    if (!match) return { status: 404, data: { message: 'Match not found' } };
+    match.homeTeamGoals = homeTeamGoals;
+    match.awayTeamGoals = awayTeamGoals;
+    await match.save();
+    return { status: 200, data: match };
   }
 }
