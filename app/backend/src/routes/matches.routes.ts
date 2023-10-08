@@ -1,5 +1,4 @@
 import { Router, Request, Response } from 'express';
-import { match } from 'assert';
 import MatchesController from '../controller/matches.controller';
 import Validations from '../middleware/Validations';
 
@@ -11,14 +10,19 @@ router.get(
   (req: Request, res: Response) => matchesController.getAllMatches(req, res),
 );
 router.patch(
+  '/:id',
+  Validations.validateRegister,
+  (req: Request, res: Response) => matchesController.setMatchPointsResult(req, res),
+);
+router.patch(
   '/:id/finish',
   Validations.validateRegister,
   (req: Request, res: Response) => matchesController.updateMatchInProgress(req, res),
 );
-router.patch(
-  '/:id',
+router.post(
+  '/',
   Validations.validateRegister,
-  (req: Request, res: Response) => matchesController.setMatchPointsResult(req, res),
+  (req: Request, res: Response) => matchesController.createMatch(req, res),
 );
 
 export default router;

@@ -25,4 +25,10 @@ export default class MatchesController {
       .setMatchPointsResult(id, homeTeamGoals, awayTeamGoals);
     return res.status(status).json(data);
   }
+
+  public async createMatch(req: Request, res: Response): Promise<Response> {
+    const { status, data } = await this._matchesService
+      .createMatch(req.body);
+    return res.status(status).json(data);
+  }
 }

@@ -4,6 +4,7 @@ import sequelize from '../database/models/index';
 import Teams from '../database/models/Teams.Model';
 import inProgressQuery from '../utils/querySQL';
 import queryType from '../Interfaces/Query';
+import { createMatch } from '../Interfaces/CreateMatch';
 
 export default class MatchesService {
   constructor(
@@ -55,5 +56,16 @@ export default class MatchesService {
     match.awayTeamGoals = awayTeamGoals;
     await match.save();
     return { status: 200, data: match };
+  }
+
+  public async createMatch({ homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals }: createMatch) {
+    const createNewMatch = await this._matchesModel.create({
+      homeTeamId,
+      homeTeamGoals,
+      awayTeamId,
+      awayTeamGoals,
+      inProgress: true,
+    });
+    return { status: 201, data: createNewMatch };
   }
 }
