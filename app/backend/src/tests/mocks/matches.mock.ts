@@ -117,8 +117,34 @@ const finishedMatch = [
 	}
 ]
 
+const createNewMatch = {
+  "homeTeamId": 16,
+  "awayTeamId": 8,
+  "homeTeamGoals": 2,
+  "awayTeamGoals": 2
+}
+
+const newMatchCreated = {
+  "id": 49,
+  "homeTeamId": 16,
+  "homeTeamGoals": 2,
+  "awayTeamId": 8,
+  "awayTeamGoals": 2,
+  "inProgress": true
+}
+
+const createdWrongMatch = {
+	"homeTeamId": 16,
+	"awayTeamId": 16,
+	"homeTeamGoals": 2,
+	"awayTeamGoals": 2
+  }
+
 export {
 	allMatches,
 	finishedMatch,
-	matchInProgress
+	matchInProgress,
+  createNewMatch,
+  newMatchCreated,
+  createdWrongMatch
 };
