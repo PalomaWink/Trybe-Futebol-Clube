@@ -2,7 +2,7 @@ import { ModelStatic } from 'sequelize';
 import Matches from '../database/models/Matches.Model';
 import sequelize from '../database/models/index';
 import Teams from '../database/models/Teams.Model';
-import inProgressQuery from '../utils/querySQL';
+import { inProgressQuery } from '../utils/querySQL';
 import queryType from '../Interfaces/Query';
 import { createMatch } from '../Interfaces/CreateMatch';
 
