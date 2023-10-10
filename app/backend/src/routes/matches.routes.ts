@@ -9,6 +9,11 @@ router.get(
   '/',
   (req: Request, res: Response) => matchesController.getAllMatches(req, res),
 );
+router.post(
+  '/',
+  Validations.validateRegister,
+  (req: Request, res: Response) => matchesController.createMatch(req, res),
+);
 router.patch(
   '/:id',
   Validations.validateRegister,
@@ -18,11 +23,6 @@ router.patch(
   '/:id/finish',
   Validations.validateRegister,
   (req: Request, res: Response) => matchesController.updateMatchInProgress(req, res),
-);
-router.post(
-  '/',
-  Validations.validateRegister,
-  (req: Request, res: Response) => matchesController.createMatch(req, res),
 );
 
 export default router;
